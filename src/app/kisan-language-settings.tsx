@@ -56,20 +56,20 @@ export function LanguageSettingsSheet({
         role="dialog"
         aria-modal="true"
         aria-labelledby="language-settings-title"
-        className="relative max-h-[85dvh] overflow-y-auto rounded-t-[24px] border border-[#434a41]/25 border-b-0 bg-[#0d120d] px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 shadow-[0_-12px_48px_rgba(0,0,0,0.45)]"
+        className="relative max-h-[85dvh] overflow-y-auto rounded-t-[24px] border border-kv-border/25 border-b-0 bg-kv-surface px-5 pb-[max(1.25rem,env(safe-area-inset-bottom))] pt-5 shadow-[0_-12px_48px_rgba(0,0,0,0.45)]"
       >
         <div className="mx-auto max-w-lg">
-          <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-[#434a41]/50" />
+          <div className="mx-auto mb-4 h-1 w-10 rounded-full bg-kv-border/50" />
 
           <div className="mb-5 flex items-start justify-between gap-3">
             <div className="min-w-0">
               <h2
                 id="language-settings-title"
-                className="text-[18px] font-bold tracking-tight text-[#f8fef3]"
+                className="text-[18px] font-bold tracking-tight text-kv-text"
               >
                 {t.settingsTitle}
               </h2>
-              <p className="mt-1 flex items-center gap-2 text-[13px] font-medium text-[#8f988e]">
+              <p className="mt-1 flex items-center gap-2 text-[13px] font-medium text-kv-text-muted">
                 <Languages className="h-3.5 w-3.5 shrink-0" strokeWidth={2} />
                 {t.chooseLanguage}
               </p>
@@ -77,7 +77,7 @@ export function LanguageSettingsSheet({
             <button
               type="button"
               onClick={onClose}
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[#434a41]/35 bg-[#141b14] text-[#a6ada3] transition-colors hover:bg-[#192219] hover:text-[#f8fef3]"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-kv-border/35 bg-kv-surface text-kv-text-muted transition-colors hover:bg-kv-surface-hover hover:text-kv-text"
               aria-label={t.dismiss}
             >
               <X className="h-5 w-5" strokeWidth={2} />
@@ -97,15 +97,15 @@ export function LanguageSettingsSheet({
                   onClick={() => onSelectLanguage(lang.id)}
                   className={[
                     "group flex w-full items-center gap-3 rounded-2xl border px-3.5 py-3 text-left transition-all duration-200",
-                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8eff71]/50 focus-visible:ring-offset-2 focus-visible:ring-offset-[#0d120d]",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-kv-primary/50 focus-visible:ring-offset-2 focus-visible:ring-offset-kv-surface",
                     "active:scale-[0.99]",
                     isActive
-                      ? "border-[#8eff71]/40 bg-[#8eff71]/[0.09] shadow-[0_0_0_1px_rgba(142,255,113,0.15)]"
-                      : "border-white/[0.07] bg-[#141b14]/90 hover:border-white/[0.12] hover:bg-[#192219]",
+                      ? "border-kv-primary/40 bg-kv-primary/[0.09] shadow-[0_0_0_1px_var(--kv-primary-soft)]"
+                      : "border-kv-border/25 bg-kv-surface/90 hover:border-kv-border/40 hover:bg-kv-surface-hover",
                   ].join(" ")}
                 >
                   <span
-                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-white/[0.06] bg-[#0a0f0a] text-[11px] font-bold tabular-nums tracking-wide text-[#8eff71]/90 shadow-inner"
+                    className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-kv-border/20 bg-kv-bg-elevated text-[11px] font-bold tabular-nums tracking-wide text-kv-primary/90 shadow-inner"
                     aria-hidden
                   >
                     {LANG_BADGE[lang.id]}
@@ -113,7 +113,7 @@ export function LanguageSettingsSheet({
                   <div className="min-w-0 flex-1 text-start">
                     <p
                       dir={lang.dir}
-                      className={`text-[15px] font-semibold leading-snug ${isActive ? "text-[#c8f7a8]" : "text-[#eef6e8]"}`}
+                      className={`text-[15px] font-semibold leading-snug ${isActive ? "text-kv-primary" : "text-kv-text"}`}
                       style={{
                         fontFamily:
                           lang.dir === "rtl"
@@ -123,9 +123,9 @@ export function LanguageSettingsSheet({
                     >
                       {lang.nativeName}
                     </p>
-                    <p className="mt-0.5 text-[11.5px] leading-tight text-[#7a8576]" lang="en">
-                      <span className="text-[#9aa396]">{lang.name}</span>
-                      <span className="mx-1.5 text-[#3d4540]">·</span>
+                    <p className="mt-0.5 text-[11.5px] leading-tight text-kv-text-muted" lang="en">
+                      <span className="text-kv-text-muted">{lang.name}</span>
+                      <span className="mx-1.5 text-kv-border">·</span>
                       <span>{lang.script}</span>
                     </p>
                   </div>
@@ -133,8 +133,8 @@ export function LanguageSettingsSheet({
                     className={[
                       "flex h-[22px] w-[22px] shrink-0 items-center justify-center rounded-full border-2 transition-colors",
                       isActive
-                        ? "border-[#8eff71] bg-[#8eff71]"
-                        : "border-[#3d4540] group-hover:border-[#5a6356]",
+                        ? "border-kv-primary bg-kv-primary"
+                        : "border-kv-border/70 group-hover:border-kv-border",
                     ].join(" ")}
                     aria-hidden
                   >
@@ -144,7 +144,7 @@ export function LanguageSettingsSheet({
                         height="12"
                         viewBox="0 0 14 14"
                         fill="none"
-                        className="text-[#050a05]"
+                        className="text-kv-primary-fg"
                       >
                         <path
                           d="M3 7L6 10L11 4"

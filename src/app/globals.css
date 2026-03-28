@@ -1,18 +1,68 @@
 @import "tailwindcss";
 
+/* ── KisanVoice theme tokens (light default; `html.dark` = forest night) ── */
 :root {
-  --background: #fefdf8;
-  --foreground: #1a1a1b;
-  --card: #ffffff;
-  --card-border: #e8e5dc;
-  --primary: #e85d04;
-  --primary-dark: #c44d00;
-  --success: #059669;
-  --success-light: #ecfdf5;
-  --danger: #dc2626;
-  --danger-light: #fef2f2;
-  --muted: #78716c;
-  --accent: #fff7ed;
+  --kv-bg: #f4f7f1;
+  --kv-bg-elevated: #eef4ea;
+  --kv-surface: #ffffff;
+  --kv-surface-hover: #e8f0e4;
+  --kv-surface-2: #ecf5e8;
+  --kv-surface-3: #e2eadc;
+  --kv-border: #b8c9b0;
+  --kv-text: #152010;
+  --kv-text-muted: #5c6658;
+  --kv-primary: #16a34a;
+  --kv-primary-end: #15803d;
+  --kv-primary-soft: rgba(22, 163, 74, 0.12);
+  --kv-primary-fg: #052e16;
+  --kv-amber: #d97706;
+  --kv-record: #dc2626;
+  --kv-bubble-from: #e8f5e9;
+  --kv-bubble-to: #dcfce7;
+  --kv-bubble-user-border: rgba(22, 163, 74, 0.35);
+  --kv-processing-bg: #f0fdf4;
+  --kv-processing-border: rgba(22, 163, 74, 0.35);
+  --kv-shadow: rgba(15, 20, 14, 0.08);
+  --kv-mic-glow: rgba(22, 163, 74, 0.25);
+
+  --background: var(--kv-bg);
+  --foreground: var(--kv-text);
+  --card: var(--kv-surface);
+  --card-border: var(--kv-border);
+  --primary: var(--kv-primary);
+  --muted: var(--kv-text-muted);
+}
+
+html.dark {
+  --kv-bg: #0a1009;
+  --kv-bg-elevated: #0d120d;
+  --kv-surface: #141b14;
+  --kv-surface-hover: #192219;
+  --kv-surface-2: #192219;
+  --kv-surface-3: #1f281f;
+  --kv-border: #434a41;
+  --kv-text: #f8fef3;
+  --kv-text-muted: #a6ada3;
+  --kv-primary: #8eff71;
+  --kv-primary-end: #2be800;
+  --kv-primary-soft: rgba(142, 255, 113, 0.1);
+  --kv-primary-fg: #050a05;
+  --kv-amber: #ffd709;
+  --kv-record: #ff7351;
+  --kv-bubble-from: #192219;
+  --kv-bubble-to: #1f281f;
+  --kv-bubble-user-border: rgba(142, 255, 113, 0.2);
+  --kv-processing-bg: #1f281f;
+  --kv-processing-border: rgba(142, 255, 113, 0.3);
+  --kv-shadow: rgba(0, 0, 0, 0.35);
+  --kv-mic-glow: rgba(142, 255, 113, 0.35);
+
+  --background: var(--kv-bg);
+  --foreground: var(--kv-text);
+  --card: var(--kv-surface);
+  --card-border: var(--kv-border);
+  --primary: var(--kv-primary);
+  --muted: var(--kv-text-muted);
 }
 
 @theme inline {
@@ -21,13 +71,24 @@
   --color-card: var(--card);
   --color-card-border: var(--card-border);
   --color-primary: var(--primary);
-  --color-primary-dark: var(--primary-dark);
-  --color-success: var(--success);
-  --color-success-light: var(--success-light);
-  --color-danger: var(--danger);
-  --color-danger-light: var(--danger-light);
   --color-muted: var(--muted);
-  --color-accent: var(--accent);
+  --color-kv-bg: var(--kv-bg);
+  --color-kv-bg-elevated: var(--kv-bg-elevated);
+  --color-kv-surface: var(--kv-surface);
+  --color-kv-surface-hover: var(--kv-surface-hover);
+  --color-kv-surface-2: var(--kv-surface-2);
+  --color-kv-surface-3: var(--kv-surface-3);
+  --color-kv-border: var(--kv-border);
+  --color-kv-text: var(--kv-text);
+  --color-kv-text-muted: var(--kv-text-muted);
+  --color-kv-primary: var(--kv-primary);
+  --color-kv-primary-end: var(--kv-primary-end);
+  --color-kv-primary-fg: var(--kv-primary-fg);
+  --color-kv-amber: var(--kv-amber);
+  --color-kv-record: var(--kv-record);
+  --color-kv-bubble-from: var(--kv-bubble-from);
+  --color-kv-bubble-to: var(--kv-bubble-to);
+  --color-kv-processing-bg: var(--kv-processing-bg);
   --font-sans: var(--font-noto-sans);
   --font-nastaliq: var(--font-noto-nastaliq);
 
@@ -91,14 +152,6 @@
   }
 }
 
-/* ── Force light mode (bright-field UI) ── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #fefdf8;
-    --foreground: #1a1a1b;
-  }
-}
-
 html {
   height: 100%;
   overflow-x: hidden;
@@ -106,8 +159,8 @@ html {
 
 body {
   min-height: 100%;
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--kv-bg);
+  color: var(--kv-text);
   font-family: var(--font-noto-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
