@@ -4,18 +4,9 @@ Voice-first agricultural intelligence for Kashmir’s farmers: tap the mic, ask 
 
 ## Demo video
 
-Add your Loom, YouTube, or hosted demo link here when it is ready.
+https://github.com/user-attachments/assets/dd3e3bdc-c4d7-4c4b-9cfc-0d8d3fdc8244
 
-```text
-TODO: replace with embed or link, e.g.
-https://www.youtube.com/watch?v=YOUR_VIDEO_ID
-https://www.loom.com/share/YOUR_LOOM_ID
-```
 
-| Placeholder | Action |
-|-------------|--------|
-| **Recording** | Screen + device capture of Ask (voice → prices) and Intel briefing |
-| **Thumbnail** | Optional: add `![Demo](docs/demo-thumb.png)` after you add an image |
 
 ---
 
