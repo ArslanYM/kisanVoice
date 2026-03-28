@@ -7,7 +7,7 @@
  * Production: set `NEXT_PUBLIC_CONVEX_URL` in Vercel for all environments that build.
  * @see https://docs.convex.dev/production/hosting/
  */
-const BUILD_TIME_PLACEHOLDER = "https://placeholder.convex.cloud";
+const BUILD_TIME_PLACEHOLDER = "https://temp-test-123.convex.cloud";
 
 export function getConvexUrlForProvider(): string {
   const fromEnv = process.env.NEXT_PUBLIC_CONVEX_URL;
@@ -15,11 +15,10 @@ export function getConvexUrlForProvider(): string {
     return fromEnv;
   }
 
-  if (process.env.NEXT_PHASE === "phase-production-build") {
-    return BUILD_TIME_PLACEHOLDER;
-  }
-
-  throw new Error(
-    "Missing NEXT_PUBLIC_CONVEX_URL. Add it to .env.local (see .env.example) and to Vercel project env vars before deploy. https://docs.convex.dev/production/hosting/"
+  // Always use placeholder as fallback - don't throw error in any environment
+  // This allows the landing page to work while authenticated features degrade gracefully
+  console.warn(
+    "Warning: NEXT_PUBLIC_CONVEX_URL not set. Using temporary placeholder. The authenticated app features will not work until you add your Convex URL to environment variables in Vercel settings."
   );
+  return BUILD_TIME_PLACEHOLDER;
 }
