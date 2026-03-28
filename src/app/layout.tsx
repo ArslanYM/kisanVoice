@@ -3,6 +3,7 @@ import { Noto_Sans, Noto_Nastaliq_Urdu } from "next/font/google";
 import { getConvexUrlForProvider } from "@/lib/convex-url";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ServiceWorkerRegistration } from "./ServiceWorkerRegistration";
+import { ThemeProvider } from "./ThemeProvider";
 import "./globals.css";
 
 const notoSans = Noto_Sans({
@@ -50,10 +51,22 @@ export default function RootLayout({
   return (
     <html
       lang="ks"
+      suppressHydrationWarning
       className={`${notoSans.variable} ${notoNastaliq.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col">
-        <ConvexClientProvider convexUrl={convexUrl}>{children}</ConvexClientProvider>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var k='kisanvoice-theme';var t=localStorage.getItem(k);var d=document.documentElement;if(t==='light'){d.classList.remove('dark');}else if(t==='dark'){d.classList.add('dark');}else if(window.matchMedia('(prefers-color-scheme: dark)').matches){d.classList.add('dark');}else{d.classList.remove('dark');}}catch(e){document.documentElement.classList.add('dark');}})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col bg-kv-bg text-kv-text transition-colors duration-200">
+        <ThemeProvider>
+          <ConvexClientProvider convexUrl={convexUrl}>
+            {children}
+          </ConvexClientProvider>
+        </ThemeProvider>
         <ServiceWorkerRegistration />
       </body>
     </html>
