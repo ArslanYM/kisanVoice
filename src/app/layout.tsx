@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Noto_Sans, Noto_Nastaliq_Urdu } from "next/font/google";
+import { getConvexUrlForProvider } from "@/lib/convex-url";
 import { ConvexClientProvider } from "./ConvexClientProvider";
 import { ServiceWorkerRegistration } from "./ServiceWorkerRegistration";
 import "./globals.css";
@@ -44,13 +45,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const convexUrl = getConvexUrlForProvider();
+
   return (
     <html
       lang="ks"
       className={`${notoSans.variable} ${notoNastaliq.variable} h-full`}
     >
       <body className="min-h-full flex flex-col">
-        <ConvexClientProvider>{children}</ConvexClientProvider>
+        <ConvexClientProvider convexUrl={convexUrl}>{children}</ConvexClientProvider>
         <ServiceWorkerRegistration />
       </body>
     </html>
