@@ -46,6 +46,7 @@ import {
 } from "./kisan-i18n";
 import { LanguageSelectScreen, FeatureGuideScreen } from "./kisan-onboarding";
 import { LanguageSettingsSheet } from "./kisan-language-settings";
+import { ThemeToggle } from "./ThemeToggle";
 
 /* ────────────────────────────────────────────
    Helpers
@@ -632,16 +633,16 @@ export default function KisanVoice() {
 
   if (onboardingStep === "loading") {
     return (
-      <main className="min-h-screen bg-[#0a1009] flex items-center justify-center">
+      <main className="min-h-screen bg-kv-bg flex items-center justify-center">
         <div className="text-center">
           <Wheat
-            className="w-16 h-16 text-[#8eff71] mx-auto mb-6 animate-pulse"
+            className="w-16 h-16 text-kv-primary mx-auto mb-6 animate-pulse"
             strokeWidth={2}
           />
-          <p className="text-[22px] font-extrabold text-[#f8fef3] tracking-tight">
+          <p className="text-[22px] font-extrabold text-kv-text tracking-tight">
             KisanVoice
           </p>
-          <Loader2 className="w-6 h-6 text-[#8eff71] animate-spin mx-auto mt-4" />
+          <Loader2 className="w-6 h-6 text-kv-primary animate-spin mx-auto mt-4" />
         </div>
       </main>
     );
@@ -670,47 +671,48 @@ export default function KisanVoice() {
 
   /* ── Main App Render ── */
   return (
-    <main className="min-h-screen bg-[#0a1009] flex flex-col font-sans text-[#f8fef3]">
+    <main className="min-h-screen bg-kv-bg flex flex-col font-sans text-kv-text">
       {/* ── Critical Alert Ticker ── */}
       {criticalAlerts.length > 0 && (
         <AlertTicker alerts={criticalAlerts} />
       )}
 
       {/* ── Top Bar ── */}
-      <header className="sticky top-0 z-30 bg-[#0a1009]/80 backdrop-blur-[24px] border-b border-[#434a41]/15 px-5 py-4">
+      <header className="sticky top-0 z-30 bg-kv-bg/80 backdrop-blur-[24px] border-b border-kv-border/15 px-5 py-4">
         <div className="flex items-center justify-between max-w-lg mx-auto">
           <div className="flex items-center gap-3">
-            <Wheat className="w-7 h-7 text-[#8eff71]" strokeWidth={2.5} />
-            <span className="text-[22px] font-extrabold tracking-tight text-[#f8fef3]">
+            <Wheat className="w-7 h-7 text-kv-primary" strokeWidth={2.5} />
+            <span className="text-[22px] font-extrabold tracking-tight text-kv-text">
               KisanVoice
             </span>
           </div>
           <div className="flex items-center gap-2 sm:gap-3">
+            <ThemeToggle />
             <button
               type="button"
               onClick={() => setSettingsOpen(true)}
-              className="w-10 h-10 rounded-full bg-[#141b14] border border-[#434a41]/30 flex items-center justify-center cursor-pointer hover:bg-[#192219] transition-colors active:scale-95"
+              className="w-10 h-10 rounded-full bg-kv-surface border border-kv-border/30 flex items-center justify-center cursor-pointer hover:bg-kv-surface-hover transition-colors active:scale-95"
               aria-label={t.settingsAriaLabel}
               aria-expanded={settingsOpen}
             >
-              <Settings className="w-5 h-5 text-[#a6ada3]" strokeWidth={2} />
+              <Settings className="w-5 h-5 text-kv-text-muted" strokeWidth={2} />
             </button>
             <button
               onClick={fetchBriefing}
               disabled={isBriefingLoading}
-              className="w-10 h-10 rounded-full bg-[#141b14] border border-[#434a41]/30 flex items-center justify-center cursor-pointer hover:bg-[#192219] transition-colors active:scale-95"
+              className="w-10 h-10 rounded-full bg-kv-surface border border-kv-border/30 flex items-center justify-center cursor-pointer hover:bg-kv-surface-hover transition-colors active:scale-95"
               aria-label={t.ariaMorningBriefing}
             >
               {isBriefingLoading ? (
-                <Loader2 className="w-5 h-5 text-[#8eff71] animate-spin" />
+                <Loader2 className="w-5 h-5 text-kv-primary animate-spin" />
               ) : (
-                <Zap className="w-5 h-5 text-[#ffd709]" />
+                <Zap className="w-5 h-5 text-kv-amber" />
               )}
             </button>
             <UserButton
               appearance={{
                 elements: {
-                  avatarBox: "w-10 h-10 border-2 border-[#192219]",
+                  avatarBox: "w-10 h-10 border-2 border-kv-border",
                 },
               }}
             />
@@ -720,13 +722,13 @@ export default function KisanVoice() {
 
       {/* ── Tab Bar ── */}
       <div className="px-5 pt-4 max-w-lg mx-auto w-full">
-        <div className="flex bg-[#141b14] rounded-[16px] p-1.5 border border-[#434a41]/15">
+        <div className="flex bg-kv-surface rounded-[16px] p-1.5 border border-kv-border/15">
           <button
             onClick={() => setActiveTab("chat")}
             className={`flex-1 py-3 rounded-[12px] text-[15px] font-bold transition-all cursor-pointer ${
               activeTab === "chat"
-                ? "bg-[#8eff71] text-[#050a05] shadow-[0_2px_12px_rgba(142,255,113,0.3)]"
-                : "text-[#a6ada3] hover:text-[#f8fef3]"
+                ? "bg-kv-primary text-kv-primary-fg shadow-[0_2px_12px_var(--kv-mic-glow)]"
+                : "text-kv-text-muted hover:text-kv-text"
             }`}
           >
             <Mic className="w-4 h-4 inline-block mr-2 -mt-0.5" />
@@ -745,8 +747,8 @@ export default function KisanVoice() {
             onClick={() => setActiveTab("intel")}
             className={`flex-1 py-3 rounded-[12px] text-[15px] font-bold transition-all cursor-pointer relative ${
               activeTab === "intel"
-                ? "bg-[#8eff71] text-[#050a05] shadow-[0_2px_12px_rgba(142,255,113,0.3)]"
-                : "text-[#a6ada3] hover:text-[#f8fef3]"
+                ? "bg-kv-primary text-kv-primary-fg shadow-[0_2px_12px_var(--kv-mic-glow)]"
+                : "text-kv-text-muted hover:text-kv-text"
             }`}
           >
             <Zap className="w-4 h-4 inline-block mr-2 -mt-0.5" />
@@ -761,7 +763,7 @@ export default function KisanVoice() {
               {t.tabIntel}
             </span>
             {criticalAlerts.length > 0 && activeTab !== "intel" && (
-              <span className="absolute -top-1 -right-1 w-5 h-5 bg-[#ff7351] rounded-full text-[11px] font-black flex items-center justify-center text-white">
+              <span className="absolute -top-1 -right-1 w-5 h-5 bg-kv-record rounded-full text-[11px] font-black flex items-center justify-center text-white">
                 {criticalAlerts.length}
               </span>
             )}
@@ -805,7 +807,7 @@ export default function KisanVoice() {
         !isProcessing && (
           <div className="px-5 pb-6 max-w-lg mx-auto w-full">
             <p
-              className="text-[13px] text-[#a6ada3] text-center mb-4 font-bold tracking-[0.1em] uppercase"
+              className="text-[13px] text-kv-text-muted text-center mb-4 font-bold tracking-[0.1em] uppercase"
               dir={selectedLanguage === "kashmiri" ? "rtl" : "ltr"}
             >
               {t.quickQueriesTitle}
@@ -814,11 +816,11 @@ export default function KisanVoice() {
               {quickQueryChips(t).map((s) => (
                 <div
                   key={s.key}
-                  className="bg-[#141b14] hover:bg-[#192219] transition-colors cursor-pointer border border-[#434a41]/20 rounded-[16px] px-3 py-4 flex flex-col items-center gap-2 shadow-[0_4px_12px_rgba(0,0,0,0.2)] hover:shadow-[0_8px_16px_rgba(142,255,113,0.05)] hover:-translate-y-0.5"
+                  className="bg-kv-surface hover:bg-kv-surface-hover transition-colors cursor-pointer border border-kv-border/20 rounded-[16px] px-3 py-4 flex flex-col items-center gap-2 shadow-[0_4px_12px_var(--kv-shadow)] hover:shadow-[0_8px_16px_var(--kv-primary-soft)] hover:-translate-y-0.5"
                 >
                   <span className="text-[28px] drop-shadow-md">{s.emoji}</span>
                   <span
-                    className={`text-[16px] font-bold text-[#f8fef3]/90 ${selectedLanguage === "kashmiri" ? "font-nastaliq" : ""}`}
+                    className={`text-[16px] font-bold text-kv-text/90 ${selectedLanguage === "kashmiri" ? "font-nastaliq" : ""}`}
                     dir={selectedLanguage === "kashmiri" ? "rtl" : "ltr"}
                   >
                     {selectedLanguage === "kashmiri" ? (
@@ -834,11 +836,11 @@ export default function KisanVoice() {
         )}
 
       {/* ── Mic Bar (sticky bottom) ── */}
-      <div className="sticky bottom-0 z-30 bg-[#0a1009]/80 backdrop-blur-[24px] border-t border-[#434a41]/10 px-4 py-5">
+      <div className="sticky bottom-0 z-30 bg-kv-bg/80 backdrop-blur-[24px] border-t border-kv-border/10 px-4 py-5">
         <div className="max-w-lg mx-auto flex items-center justify-center gap-6">
           {completedChats.length > 0 && !isRecording && !isProcessing && (
-            <div className="flex items-center gap-2 text-[14px] font-bold text-[#a6ada3] bg-[#141b14] px-4 py-2 rounded-full border border-[#434a41]/20">
-              <MessageCircle className="w-4 h-4 text-[#8eff71]" />
+            <div className="flex items-center gap-2 text-[14px] font-bold text-kv-text-muted bg-kv-surface px-4 py-2 rounded-full border border-kv-border/20">
+              <MessageCircle className="w-4 h-4 text-kv-primary" />
               <span>{completedChats.length}</span>
             </div>
           )}
@@ -852,25 +854,25 @@ export default function KisanVoice() {
               "transition-all duration-300 active:scale-95 cursor-pointer",
               "focus:outline-none",
               isRecording
-                ? "bg-[#ff7351] shadow-[0_0_40px_rgba(255,115,81,0.5)] scale-105"
+                ? "bg-kv-record shadow-[0_0_40px_rgba(255,115,81,0.5)] scale-105"
                 : isProcessing
-                  ? "bg-[#1f281f] border-2 border-[#8eff71]/30 cursor-wait shadow-[0_4px_20px_rgba(142,255,113,0.1)]"
-                  : "bg-gradient-to-b from-[#8eff71] to-[#2be800] shadow-[0_8px_32px_rgba(142,255,113,0.3)] hover:shadow-[0_8px_40px_rgba(142,255,113,0.5)] hover:-translate-y-1",
+                  ? "bg-kv-surface-3 border-2 border-kv-primary/30 cursor-wait shadow-[0_4px_20px_rgba(142,255,113,0.1)]"
+                  : "bg-gradient-to-b from-kv-primary to-kv-primary-end shadow-[0_8px_32px_var(--kv-mic-glow)] hover:shadow-[0_8px_40px_var(--kv-mic-glow)] hover:-translate-y-1",
               "disabled:opacity-70 disabled:cursor-wait",
             ].join(" ")}
           >
             {isProcessing ? (
-              <Loader2 className="w-10 h-10 text-[#8eff71] animate-spin" />
+              <Loader2 className="w-10 h-10 text-kv-primary animate-spin" />
             ) : isRecording ? (
-              <Square className="w-10 h-10 text-[#000000] fill-[#000000]" />
+              <Square className="w-10 h-10 text-kv-primary-fg fill-kv-primary-fg" />
             ) : (
-              <Mic className="w-11 h-11 text-[#050a05]" strokeWidth={2.5} />
+              <Mic className="w-11 h-11 text-kv-primary-fg" strokeWidth={2.5} />
             )}
           </button>
 
           {!isRecording && !isProcessing && (
             <p
-              className={`text-[14px] text-[#a6ada3] font-bold w-24 text-center leading-tight ${selectedLanguage === "kashmiri" ? "font-nastaliq" : ""}`}
+              className={`text-[14px] text-kv-text-muted font-bold w-24 text-center leading-tight ${selectedLanguage === "kashmiri" ? "font-nastaliq" : ""}`}
               dir={selectedLanguage === "kashmiri" ? "rtl" : "ltr"}
             >
               {selectedLanguage === "kashmiri" ? (
@@ -929,7 +931,7 @@ function AlertTicker({ alerts }: { alerts: AlertDoc[] }) {
     <div
       className={`w-full px-4 py-3 flex items-center gap-3 text-[14px] font-bold transition-colors ${
         isCritical
-          ? "bg-[#ff7351]/15 border-b border-[#ff7351]/30 text-[#ff7351]"
+          ? "bg-kv-record/15 border-b border-kv-record/30 text-kv-record"
           : "bg-[#f59e0b]/10 border-b border-[#f59e0b]/20 text-[#f59e0b]"
       }`}
     >
@@ -992,15 +994,15 @@ function ChatTab({
   return (
     <div className="flex-1 overflow-y-auto px-4 py-6 max-w-lg mx-auto w-full flex flex-col gap-6">
       {!history.length && !isRecording && !isProcessing && (
-        <div className="bg-[#141b14] rounded-[24px] p-6 shadow-[0_8px_32px_rgba(142,255,113,0.03)] border border-[#434a41]/10">
+        <div className="bg-kv-surface rounded-[24px] p-6 shadow-[0_8px_32px_var(--kv-primary-soft)] border border-kv-border/10">
           <p
-            className={`text-[26px] font-extrabold text-[#f8fef3] mb-2 tracking-tight ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[26px] font-extrabold text-kv-text mb-2 tracking-tight ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? <Kas>{welcomeTitle}</Kas> : welcomeTitle}
           </p>
           <p
-            className={`text-[18px] text-[#a6ada3] leading-relaxed ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[18px] text-kv-text-muted leading-relaxed ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1009,9 +1011,9 @@ function ChatTab({
               t.mainWelcomeSubtitle
             )}
           </p>
-          <div className="mt-4 pt-4 border-t border-[#434a41]/15">
+          <div className="mt-4 pt-4 border-t border-kv-border/15">
             <p
-              className={`text-[14px] text-[#8eff71]/80 font-bold flex items-center gap-2 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+              className={`text-[14px] text-kv-primary/80 font-bold flex items-center gap-2 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
               dir={lang === "kashmiri" ? "rtl" : "ltr"}
             >
               <Zap className="w-4 h-4 shrink-0" />
@@ -1022,7 +1024,7 @@ function ChatTab({
               )}
             </p>
             <p
-              className={`text-[13px] text-[#a6ada3]/60 mt-1 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+              className={`text-[13px] text-kv-text-muted/60 mt-1 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
               dir={lang === "kashmiri" ? "rtl" : "ltr"}
             >
               {lang === "kashmiri" ? (
@@ -1050,11 +1052,11 @@ function ChatTab({
               <div key={String(chat._id)} className="flex flex-col gap-4">
                 {chat.transcript && (
                   <div className="flex justify-end">
-                    <div className="bg-gradient-to-br from-[#192219] to-[#1f281f] text-[#f8fef3] border border-[#8eff71]/20 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_16px_rgba(142,255,113,0.05)]">
+                    <div className="bg-gradient-to-br from-kv-bubble-from to-kv-bubble-to text-kv-text border border-kv-primary/20 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_16px_var(--kv-primary-soft)]">
                       <p className="text-[17px] font-semibold leading-relaxed">
                         🎤 {chat.transcript}
                       </p>
-                      <p className="text-[12px] text-[#8eff71]/70 mt-2 text-right font-medium">
+                      <p className="text-[12px] text-kv-primary/70 mt-2 text-right font-medium">
                         {timeAgo(chat.timestamp)}
                       </p>
                     </div>
@@ -1075,14 +1077,14 @@ function ChatTab({
 
       {isRecording && (
         <div className="flex justify-end mt-4">
-          <div className="bg-[#1f281f]/80 backdrop-blur-md border border-[#ff7351]/40 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_20px_rgba(255,115,81,0.15)]">
+          <div className="bg-kv-surface-3/80 backdrop-blur-md border border-kv-record/40 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_20px_rgba(255,115,81,0.15)]">
             <div className="flex items-center gap-3">
               <span className="relative flex h-3 w-3">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#ff7351] opacity-75" />
-                <span className="relative inline-flex rounded-full h-3 w-3 bg-[#ff7351]" />
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-kv-record opacity-75" />
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-kv-record" />
               </span>
               <span
-                className={`text-[17px] font-bold text-[#ff7351] ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+                className={`text-[17px] font-bold text-kv-record ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
                 dir={lang === "kashmiri" ? "rtl" : "ltr"}
               >
                 {lang === "kashmiri" ? (
@@ -1098,7 +1100,7 @@ function ChatTab({
 
       {activeQueryData?.transcript && activeQueryData.status !== "complete" && (
         <div className="flex justify-end mt-4">
-          <div className="bg-gradient-to-br from-[#192219] to-[#1f281f] text-[#f8fef3] border border-[#8eff71]/20 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_16px_rgba(142,255,113,0.05)]">
+          <div className="bg-gradient-to-br from-kv-bubble-from to-kv-bubble-to text-kv-text border border-kv-primary/20 rounded-[20px] rounded-br-[4px] px-5 py-4 max-w-[85%] shadow-[0_4px_16px_var(--kv-primary-soft)]">
             <p className="text-[17px] font-semibold leading-relaxed">
               🎤 {activeQueryData.transcript}
             </p>
@@ -1108,11 +1110,11 @@ function ChatTab({
 
       {isProcessing && !isRecording && (
         <div className="flex justify-start mt-4">
-          <div className="bg-[#141b14] border border-[#434a41]/20 rounded-[20px] rounded-bl-[4px] px-6 py-5 shadow-sm">
+          <div className="bg-kv-surface border border-kv-border/20 rounded-[20px] rounded-bl-[4px] px-6 py-5 shadow-sm">
             <div className="flex items-center gap-4">
-              <Loader2 className="w-6 h-6 animate-spin text-[#8eff71]" />
+              <Loader2 className="w-6 h-6 animate-spin text-kv-primary" />
               <span
-                className={`text-[18px] font-bold text-[#f8fef3] ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+                className={`text-[18px] font-bold text-kv-text ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
                 dir={lang === "kashmiri" ? "rtl" : "ltr"}
               >
                 {lang === "kashmiri" ? (
@@ -1134,13 +1136,13 @@ function ChatTab({
 
       {error && (
         <div className="flex justify-start mt-4">
-          <div className="bg-[#1f281f] border border-[#ff7351]/30 rounded-[20px] rounded-bl-[4px] px-6 py-5 max-w-[92%]">
-            <p className="text-[16px] font-semibold text-[#ff7351]">
+          <div className="bg-kv-surface-3 border border-kv-record/30 rounded-[20px] rounded-bl-[4px] px-6 py-5 max-w-[92%]">
+            <p className="text-[16px] font-semibold text-kv-record">
               ⚠️ {error}
             </p>
             <button
               onClick={() => setError(null)}
-              className="mt-3 text-[14px] text-[#ff7351] underline font-bold cursor-pointer hover:text-[#ff7351]/80 transition-colors"
+              className="mt-3 text-[14px] text-kv-record underline font-bold cursor-pointer hover:text-kv-record/80 transition-colors"
             >
               {t.dismiss}
             </button>
@@ -1192,9 +1194,9 @@ function IntelTab({
     return (
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="text-center">
-          <Loader2 className="w-12 h-12 text-[#8eff71] animate-spin mx-auto mb-4" />
+          <Loader2 className="w-12 h-12 text-kv-primary animate-spin mx-auto mb-4" />
           <p
-            className={`text-[20px] font-bold text-[#f8fef3] ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[20px] font-bold text-kv-text ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1204,7 +1206,7 @@ function IntelTab({
             )}
           </p>
           <p
-            className={`text-[15px] text-[#a6ada3] mt-2 font-medium ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[15px] text-kv-text-muted mt-2 font-medium ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1217,7 +1219,7 @@ function IntelTab({
             {sourcePills.map((s) => (
               <span
                 key={s}
-                className="px-3 py-1.5 bg-[#141b14] border border-[#434a41]/20 rounded-full text-[12px] font-bold text-[#a6ada3] animate-pulse"
+                className="px-3 py-1.5 bg-kv-surface border border-kv-border/20 rounded-full text-[12px] font-bold text-kv-text-muted animate-pulse"
               >
                 {s}
               </span>
@@ -1232,9 +1234,9 @@ function IntelTab({
     return (
       <div className="flex-1 flex items-center justify-center px-4 py-12">
         <div className="text-center max-w-sm">
-          <Zap className="w-16 h-16 text-[#ffd709]/40 mx-auto mb-4" />
+          <Zap className="w-16 h-16 text-kv-amber/40 mx-auto mb-4" />
           <p
-            className={`text-[22px] font-extrabold text-[#f8fef3] mb-2 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[22px] font-extrabold text-kv-text mb-2 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1244,7 +1246,7 @@ function IntelTab({
             )}
           </p>
           <p
-            className={`text-[16px] text-[#a6ada3] mb-4 leading-relaxed ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[16px] text-kv-text-muted mb-4 leading-relaxed ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1254,7 +1256,7 @@ function IntelTab({
             )}
           </p>
           <p
-            className={`text-[14px] text-[#a6ada3]/70 mb-6 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+            className={`text-[14px] text-kv-text-muted/70 mb-6 ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
             dir={lang === "kashmiri" ? "rtl" : "ltr"}
           >
             {lang === "kashmiri" ? (
@@ -1264,14 +1266,14 @@ function IntelTab({
             )}
           </p>
           {briefingError && (
-            <div className="mb-6 rounded-[16px] border border-[#ff7351]/30 bg-[#ff7351]/10 px-4 py-3 text-left">
-              <p className="text-[14px] font-semibold text-[#ff7351] break-words">
+            <div className="mb-6 rounded-[16px] border border-kv-record/30 bg-kv-record/10 px-4 py-3 text-left">
+              <p className="text-[14px] font-semibold text-kv-record break-words">
                 {briefingError}
               </p>
               <button
                 type="button"
                 onClick={() => setBriefingError(null)}
-                className="mt-2 text-[13px] text-[#ff7351] underline font-bold"
+                className="mt-2 text-[13px] text-kv-record underline font-bold"
               >
                 {t.dismiss}
               </button>
@@ -1279,7 +1281,7 @@ function IntelTab({
           )}
           <button
             onClick={onRefresh}
-            className="px-8 py-4 bg-gradient-to-b from-[#8eff71] to-[#2be800] text-[#050a05] rounded-[16px] font-extrabold text-[17px] shadow-[0_8px_32px_rgba(142,255,113,0.3)] hover:shadow-[0_8px_40px_rgba(142,255,113,0.5)] cursor-pointer active:scale-95 transition-all"
+            className="px-8 py-4 bg-gradient-to-b from-kv-primary to-kv-primary-end text-kv-primary-fg rounded-[16px] font-extrabold text-[17px] shadow-[0_8px_32px_var(--kv-mic-glow)] hover:shadow-[0_8px_40px_var(--kv-mic-glow)] cursor-pointer active:scale-95 transition-all"
           >
             <Zap className="w-5 h-5 inline-block mr-2 -mt-0.5" />
             <span
@@ -1297,26 +1299,26 @@ function IntelTab({
   return (
     <div className="flex-1 overflow-y-auto px-4 py-6 max-w-lg mx-auto w-full space-y-5">
       {briefingError && (
-        <div className="rounded-[16px] border border-[#ff7351]/30 bg-[#ff7351]/10 px-4 py-3">
-          <p className="text-[14px] font-semibold text-[#ff7351] break-words">
+        <div className="rounded-[16px] border border-kv-record/30 bg-kv-record/10 px-4 py-3">
+          <p className="text-[14px] font-semibold text-kv-record break-words">
             {briefingError}
           </p>
           <button
             type="button"
             onClick={() => setBriefingError(null)}
-            className="mt-2 text-[13px] text-[#ff7351] underline font-bold"
+            className="mt-2 text-[13px] text-kv-record underline font-bold"
           >
             {t.dismiss}
           </button>
         </div>
       )}
       {/* Morning Briefing Card */}
-      <div className="bg-gradient-to-b from-[#192219] to-[#141b14] rounded-[24px] p-6 border border-[#8eff71]/15 shadow-[0_8px_32px_rgba(142,255,113,0.05)]">
+      <div className="bg-gradient-to-b from-kv-surface-2 to-kv-surface rounded-[24px] p-6 border border-kv-primary/15 shadow-[0_8px_32px_var(--kv-primary-soft)]">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2.5">
-            <Volume2 className="w-6 h-6 text-[#8eff71]" />
+            <Volume2 className="w-6 h-6 text-kv-primary" />
             <span
-              className={`text-[16px] font-extrabold text-[#8eff71] uppercase tracking-wide ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
+              className={`text-[16px] font-extrabold text-kv-primary uppercase tracking-wide ${lang === "kashmiri" ? "font-nastaliq" : ""}`}
               dir={lang === "kashmiri" ? "rtl" : "ltr"}
             >
               {lang === "kashmiri" ? (
@@ -1328,10 +1330,10 @@ function IntelTab({
           </div>
           <button
             onClick={onRefresh}
-            className="w-9 h-9 rounded-full bg-[#0a1009] border border-[#434a41]/30 flex items-center justify-center cursor-pointer hover:bg-[#192219] transition-colors active:scale-95"
+            className="w-9 h-9 rounded-full bg-kv-bg border border-kv-border/30 flex items-center justify-center cursor-pointer hover:bg-kv-surface-hover transition-colors active:scale-95"
             aria-label={t.ariaRefreshBriefing}
           >
-            <RefreshCw className="w-4 h-4 text-[#a6ada3]" />
+            <RefreshCw className="w-4 h-4 text-kv-text-muted" />
           </button>
         </div>
 
@@ -1339,7 +1341,7 @@ function IntelTab({
           (briefingData.morningBriefingKashmiri || briefingData.morningBriefing) && (
             <p
               dir="rtl"
-              className="text-[19px] leading-[1.8] text-[#f8fef3] font-nastaliq mb-3"
+              className="text-[19px] leading-[1.8] text-kv-text font-nastaliq mb-3"
             >
               {briefingData.morningBriefingKashmiri ||
                 briefingData.morningBriefing}
@@ -1348,21 +1350,21 @@ function IntelTab({
 
         {lang === "hindi" &&
           (briefingData.morningBriefingHindi || briefingData.morningBriefing) && (
-            <p className="text-[16px] leading-relaxed text-[#f8fef3] mb-3">
+            <p className="text-[16px] leading-relaxed text-kv-text mb-3">
               {briefingData.morningBriefingHindi ||
                 briefingData.morningBriefing}
             </p>
           )}
 
         {lang === "english" && briefingData.morningBriefing && (
-          <p className="text-[16px] leading-relaxed text-[#f8fef3] mb-3">
+          <p className="text-[16px] leading-relaxed text-kv-text mb-3">
             {briefingData.morningBriefing}
           </p>
         )}
 
         <button
           onClick={() => setShowDetail(!showDetail)}
-          className="mt-4 flex items-center gap-2 text-[14px] font-bold text-[#8eff71] cursor-pointer hover:text-[#8eff71]/80 transition-colors"
+          className="mt-4 flex items-center gap-2 text-[14px] font-bold text-kv-primary cursor-pointer hover:text-kv-primary/80 transition-colors"
         >
           {showDetail ? (
             <>
@@ -1394,25 +1396,25 @@ function IntelTab({
                     : "green"
               }
             >
-              <p className="text-[15px] font-bold text-[#f8fef3] mb-1">
+              <p className="text-[15px] font-bold text-kv-text mb-1">
                 {t.nh44StatusPrefix}{" "}
                 <span
                   className={
                     briefingData.highway.status === "closed"
-                      ? "text-[#ff7351]"
+                      ? "text-kv-record"
                       : briefingData.highway.status === "restricted"
-                        ? "text-[#ffd709]"
-                        : "text-[#8eff71]"
+                        ? "text-kv-amber"
+                        : "text-kv-primary"
                   }
                 >
                   {briefingData.highway.status.toUpperCase()}
                 </span>
               </p>
-              <p className="text-[14px] text-[#a6ada3] leading-relaxed">
+              <p className="text-[14px] text-kv-text-muted leading-relaxed">
                 {briefingData.highway.detail}
               </p>
               {briefingData.highway.advice && (
-                <p className="mt-2 text-[14px] text-[#ffd709] font-bold">
+                <p className="mt-2 text-[14px] text-kv-amber font-bold">
                   💡 {briefingData.highway.advice}
                 </p>
               )}
@@ -1432,9 +1434,9 @@ function IntelTab({
                 {briefingData.subsidies.map((sub, i) => (
                   <div
                     key={i}
-                    className="bg-[#0a1009]/50 rounded-[12px] p-3 border border-[#434a41]/15"
+                    className="bg-kv-bg/50 rounded-[12px] p-3 border border-kv-border/15"
                   >
-                    <p className="text-[15px] font-bold text-[#f8fef3]">
+                    <p className="text-[15px] font-bold text-kv-text">
                       {sub.name}
                     </p>
                     {sub.deadline && (
@@ -1443,7 +1445,7 @@ function IntelTab({
                         {t.deadlineLabel}: {sub.deadline}
                       </p>
                     )}
-                    <p className="text-[13px] text-[#a6ada3] mt-1">
+                    <p className="text-[13px] text-kv-text-muted mt-1">
                       {sub.detail}
                     </p>
                   </div>
@@ -1466,9 +1468,9 @@ function IntelTab({
                   {briefingData.pestWarnings.map((pw, i) => (
                     <div
                       key={i}
-                      className="bg-[#0a1009]/50 rounded-[12px] p-3 border border-[#434a41]/15"
+                      className="bg-kv-bg/50 rounded-[12px] p-3 border border-kv-border/15"
                     >
-                      <p className="text-[15px] font-bold text-[#f8fef3]">
+                      <p className="text-[15px] font-bold text-kv-text">
                         {pw.crop} — {pw.issue}
                       </p>
                       <p className="text-[13px] text-[#f97316] font-bold mt-1">
@@ -1489,7 +1491,7 @@ function IntelTab({
               lang={lang}
               color="green"
             >
-              <p className="text-[15px] text-[#f8fef3] leading-relaxed">
+              <p className="text-[15px] text-kv-text leading-relaxed">
                 {briefingData.marketVibe}
               </p>
             </IntelCard>
@@ -1498,7 +1500,7 @@ function IntelTab({
           {/* Active Alerts */}
           {criticalAlerts.length > 0 && (
             <div className="space-y-3">
-              <p className="text-[14px] font-extrabold text-[#ff7351] uppercase tracking-wide flex items-center gap-2">
+              <p className="text-[14px] font-extrabold text-kv-record uppercase tracking-wide flex items-center gap-2">
                 <AlertTriangle className="w-4 h-4" /> {t.activeAlerts}
               </p>
               {criticalAlerts.map((alert) => {
@@ -1519,12 +1521,12 @@ function IntelTab({
                         {lang === "kashmiri" ? (
                           <p
                             dir="rtl"
-                            className="text-[14px] text-[#a6ada3] mt-1 leading-relaxed font-nastaliq"
+                            className="text-[14px] text-kv-text-muted mt-1 leading-relaxed font-nastaliq"
                           >
                             {alert.bodyKashmiri || alert.body}
                           </p>
                         ) : (
-                          <p className="text-[14px] text-[#a6ada3] mt-1 leading-relaxed">
+                          <p className="text-[14px] text-kv-text-muted mt-1 leading-relaxed">
                             {alert.body}
                           </p>
                         )}
@@ -1562,19 +1564,19 @@ function IntelCard({
 }) {
   const colorMap = {
     red: {
-      border: "border-[#ff7351]/20",
-      icon: "text-[#ff7351]",
-      bg: "bg-[#ff7351]/5",
+      border: "border-kv-record/20",
+      icon: "text-kv-record",
+      bg: "bg-kv-record/5",
     },
     yellow: {
-      border: "border-[#ffd709]/20",
-      icon: "text-[#ffd709]",
+      border: "border-kv-amber/20",
+      icon: "text-kv-amber",
       bg: "bg-[#ffd709]/5",
     },
     green: {
-      border: "border-[#8eff71]/20",
-      icon: "text-[#8eff71]",
-      bg: "bg-[#8eff71]/5",
+      border: "border-kv-primary/20",
+      icon: "text-kv-primary",
+      bg: "bg-kv-primary/5",
     },
     purple: {
       border: "border-[#a78bfa]/20",
@@ -1604,12 +1606,12 @@ function IntelCard({
         {lang === "kashmiri" ? (
           <span
             dir="rtl"
-            className="text-[14px] font-extrabold text-[#f8fef3] uppercase tracking-wider font-nastaliq"
+            className="text-[14px] font-extrabold text-kv-text uppercase tracking-wider font-nastaliq"
           >
             <Kas>{titleKas}</Kas>
           </span>
         ) : (
-          <span className="text-[14px] font-extrabold text-[#f8fef3] uppercase tracking-wider">
+          <span className="text-[14px] font-extrabold text-kv-text uppercase tracking-wider">
             {title}
           </span>
         )}
@@ -1641,14 +1643,14 @@ function MiniResultCard({
     },
     down: {
       Icon: TrendingDown,
-      bg: "bg-[#ff7351]/10",
-      text: "text-[#ff7351]",
+      bg: "bg-kv-record/10",
+      text: "text-kv-record",
       label: "↓",
     },
     stable: {
       Icon: Minus,
-      bg: "bg-[#ffd709]/10",
-      text: "text-[#ffd709]",
+      bg: "bg-kv-amber/10",
+      text: "text-kv-amber",
       label: "—",
     },
   };
@@ -1658,10 +1660,10 @@ function MiniResultCard({
 
   const confBg =
     data.confidence === "high"
-      ? "bg-[#8eff71]/10 text-[#8eff71] border border-[#8eff71]/20"
+      ? "bg-kv-primary/10 text-kv-primary border border-kv-primary/20"
       : data.confidence === "medium"
-        ? "bg-[#ffd709]/10 text-[#ffd709] border border-[#ffd709]/20"
-        : "bg-[#a6ada3]/10 text-[#a6ada3] border border-[#434a41]/20";
+        ? "bg-kv-amber/10 text-kv-amber border border-kv-amber/20"
+        : "bg-kv-text-muted/10 text-kv-text-muted border border-kv-border/20";
 
   const commodityPrimary =
     lang === "kashmiri"
@@ -1692,24 +1694,24 @@ function MiniResultCard({
   const showTip = lang === "english" && data.additionalInfo;
 
   return (
-    <div className="bg-[#141b14] border border-[#434a41]/20 rounded-[24px] rounded-bl-[8px] overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.4)]">
+    <div className="bg-kv-surface border border-kv-border/20 rounded-[24px] rounded-bl-[8px] overflow-hidden shadow-[0_4px_24px_var(--kv-shadow)]">
       {/* Header */}
-      <div className="p-5 pb-4 bg-gradient-to-b from-[#192219] to-[#141b14] relative">
-        <div className="absolute inset-0 bg-[#8eff71]/5 opacity-0 hover:opacity-100 transition-opacity pointer-events-none" />
+      <div className="p-5 pb-4 bg-gradient-to-b from-kv-surface-2 to-kv-surface relative">
+        <div className="absolute inset-0 bg-kv-primary/5 opacity-0 hover:opacity-100 transition-opacity pointer-events-none" />
         <div className="flex flex-wrap items-center gap-4 mb-4 relative z-10">
-          <div className="w-14 h-14 rounded-[16px] bg-[#0a1009] border border-[#434a41]/30 flex items-center justify-center text-[32px] shadow-inner">
+          <div className="w-14 h-14 rounded-[16px] bg-kv-bg border border-kv-border/30 flex items-center justify-center text-[32px] shadow-inner">
             {getCommodityEmoji(data.commodity)}
           </div>
           <div className="flex-1 min-w-0">
             {lang === "kashmiri" ? (
               <p
                 dir="rtl"
-                className="text-[22px] font-extrabold text-[#f8fef3] leading-tight mb-1 font-nastaliq"
+                className="text-[22px] font-extrabold text-kv-text leading-tight mb-1 font-nastaliq"
               >
                 <Kas>{commodityPrimary}</Kas>
               </p>
             ) : (
-              <p className="text-[22px] font-extrabold text-[#f8fef3] leading-tight mb-1">
+              <p className="text-[22px] font-extrabold text-kv-text leading-tight mb-1">
                 {commodityPrimary}
               </p>
             )}
@@ -1723,10 +1725,10 @@ function MiniResultCard({
         </div>
 
         <div className="flex items-baseline gap-2 mt-2 relative z-10">
-          <p className="text-[42px] font-black leading-none text-[#8eff71] tracking-tight">
+          <p className="text-[42px] font-black leading-none text-kv-primary tracking-tight">
             {formatPrice(data.currentPrice)}
           </p>
-          <p className="text-[15px] text-[#a6ada3] font-bold uppercase tracking-wider">
+          <p className="text-[15px] text-kv-text-muted font-bold uppercase tracking-wider">
             / {unitDisplay}
           </p>
         </div>
@@ -1737,12 +1739,12 @@ function MiniResultCard({
         {lang === "kashmiri" ? (
           <p
             dir="rtl"
-            className="text-[17px] leading-relaxed text-[#f8fef3]/90 font-nastaliq"
+            className="text-[17px] leading-relaxed text-kv-text/90 font-nastaliq"
           >
             <Kas>{summaryPrimary}</Kas>
           </p>
         ) : (
-          <p className="text-[15px] leading-relaxed text-[#a6ada3] font-medium">
+          <p className="text-[15px] leading-relaxed text-kv-text-muted font-medium">
             {summaryPrimary}
           </p>
         )}
@@ -1752,26 +1754,26 @@ function MiniResultCard({
           <div
             className={`rounded-[16px] p-4 mt-3 flex items-start gap-3 border ${
               data.highway.status === "closed"
-                ? "bg-[#ff7351]/8 border-[#ff7351]/25"
+                ? "bg-kv-record/8 border-kv-record/25"
                 : data.highway.status === "restricted"
-                  ? "bg-[#ffd709]/8 border-[#ffd709]/25"
-                  : "bg-[#8eff71]/5 border-[#8eff71]/20"
+                  ? "bg-[#ffd709]/8 border-kv-amber/25"
+                  : "bg-kv-primary/5 border-kv-primary/20"
             }`}
           >
             <Truck
               className={`w-5 h-5 shrink-0 mt-0.5 ${
                 data.highway.status === "closed"
-                  ? "text-[#ff7351]"
+                  ? "text-kv-record"
                   : data.highway.status === "restricted"
-                    ? "text-[#ffd709]"
-                    : "text-[#8eff71]"
+                    ? "text-kv-amber"
+                    : "text-kv-primary"
               }`}
             />
             <div className="min-w-0">
               {lang === "kashmiri" && data.highwayKashmiri ? (
                 <p
                   dir="rtl"
-                  className="text-[14px] font-extrabold text-[#f8fef3] font-nastaliq leading-snug"
+                  className="text-[14px] font-extrabold text-kv-text font-nastaliq leading-snug"
                 >
                   <Kas>{data.highwayKashmiri}</Kas>
                 </p>
@@ -1780,20 +1782,20 @@ function MiniResultCard({
                   <p
                     className={`text-[14px] font-extrabold ${
                       data.highway.status === "closed"
-                        ? "text-[#ff7351]"
+                        ? "text-kv-record"
                         : data.highway.status === "restricted"
-                          ? "text-[#ffd709]"
-                          : "text-[#8eff71]"
+                          ? "text-kv-amber"
+                          : "text-kv-primary"
                     }`}
                   >
                     {t.nh44StatusPrefix}{" "}
                     {data.highway.status.toUpperCase()}
                   </p>
-                  <p className="text-[13px] text-[#a6ada3] mt-1 leading-relaxed">
+                  <p className="text-[13px] text-kv-text-muted mt-1 leading-relaxed">
                     {data.highway.detail}
                   </p>
                   {data.highway.advice && (
-                    <p className="text-[13px] text-[#ffd709] font-bold mt-1">
+                    <p className="text-[13px] text-kv-amber font-bold mt-1">
                       {data.highway.advice}
                     </p>
                   )}
@@ -1804,9 +1806,9 @@ function MiniResultCard({
         )}
 
         {showTip && (
-          <div className="bg-[#1f281f] border border-[#434a41]/20 rounded-[16px] p-4 mt-4 relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-1 h-full bg-[#8eff71]/50 group-hover:bg-[#8eff71] transition-colors" />
-            <p className="text-[14px] text-[#8eff71] font-bold leading-relaxed flex items-start gap-3">
+          <div className="bg-kv-surface-3 border border-kv-border/20 rounded-[16px] p-4 mt-4 relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-1 h-full bg-kv-primary/50 group-hover:bg-kv-primary transition-colors" />
+            <p className="text-[14px] text-kv-primary font-bold leading-relaxed flex items-start gap-3">
               <span className="text-[18px]">💡</span>
               <span>{data.additionalInfo}</span>
             </p>
@@ -1814,13 +1816,13 @@ function MiniResultCard({
         )}
 
         {/* Footer */}
-        <div className="flex items-center justify-between pt-5 mt-4 border-t border-[#434a41]/20">
-          <div className="flex items-center gap-2 text-[13px] font-bold text-[#a6ada3]">
-            <MapPin className="w-4 h-4 text-[#ffd709]" />
+        <div className="flex items-center justify-between pt-5 mt-4 border-t border-kv-border/20">
+          <div className="flex items-center gap-2 text-[13px] font-bold text-kv-text-muted">
+            <MapPin className="w-4 h-4 text-kv-amber" />
             <span className="line-clamp-1">{data.market}</span>
           </div>
           <div className="flex items-center gap-3 shrink-0">
-            <div className="flex items-center gap-1.5 text-[12px] font-bold text-[#a6ada3]">
+            <div className="flex items-center gap-1.5 text-[12px] font-bold text-kv-text-muted">
               <Clock className="w-3.5 h-3.5" />
               <span>{data.lastUpdated || "Today"}</span>
             </div>
